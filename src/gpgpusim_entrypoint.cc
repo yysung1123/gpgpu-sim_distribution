@@ -37,6 +37,7 @@
 #include "gpgpu-sim/icnt_wrapper.h"
 #include "option_parser.h"
 #include "stream_manager.h"
+#include "gpgpu-sim/op_stat.h"
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
@@ -69,6 +70,7 @@ void *gpgpu_sim_thread_sequential(void *ctx_ptr) {
 
 static void termination_callback() {
   printf("GPGPU-Sim: *** exit detected ***\n");
+  print_op_stat();
   fflush(stdout);
 }
 
@@ -264,8 +266,8 @@ void gpgpu_context::print_simulation_time() {
   const unsigned cycles_per_sec =
       (unsigned)(the_gpgpusim->g_the_gpu->gpu_tot_sim_cycle / difference);
   printf("gpgpu_simulation_rate = %u (cycle/sec)\n", cycles_per_sec);
-  printf("gpgpu_silicon_slowdown = %ux\n",
-         the_gpgpusim->g_the_gpu->shader_clock() * 1000 / cycles_per_sec);
+  //printf("gpgpu_silicon_slowdown = %ux\n",
+  //       the_gpgpusim->g_the_gpu->shader_clock() * 1000 / cycles_per_sec);
   fflush(stdout);
 }
 
